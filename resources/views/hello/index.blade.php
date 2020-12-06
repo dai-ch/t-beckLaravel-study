@@ -20,7 +20,7 @@
 <body>
   <h1>Blade/Index</h1>
   <p>{{$msg}}</p>
-  <form action="http://localhost/t-beckLaravel-study/public/hello" method="POST">
+  <form action="/hello" method="POST">
     @csrf
     <input type="text" name="msg">
     <input type="submit">
