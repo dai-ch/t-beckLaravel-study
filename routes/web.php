@@ -19,8 +19,8 @@ use Illuminate\Support\Facades\Route;
 // });
 
 
-//Route::get('hello','HelloController@index');
-Route::get('hello', [HelloController::class,'index']);
+Route::get('hello','HelloController@index');
+//Route::get('hello', [HelloController::class,'index']);
 
 //Route::get('/hello/{id?}/{pass?}', 'App\Http\Controllers\HelloController@index');
 
