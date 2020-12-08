@@ -1,34 +1,19 @@
-<html>
+@extends('layouts.helloapp')
 
-<head>
-  <title>Hello/Index</title>
-  <style>
-    body {
-      font-size: 16pt;
-      color: #999;
-    }
+@section('title','index')
 
-    h1 {
-      font-size: 100pt;
-      text-align: right;
-      color: #eee;
-      margin: -40px 0 -50px 0px;
-    }
-  </style>
-</head>
+@section('menubar')
 
-<body>
-  <h1>Blade/Index</h1>
-  @if ($msg != '')
-  <p>こんにちは、{{$msg}}さん。</p>
-  @else
-  <p>何か書いてください</p>
-  @endif
-  <form action="hello" method="POST">
-    @csrf
-    <input type="text" name="msg">
-    <input type="submit">
-  </form>
-</body>
+@parent
+インデックスページ
+@endsection
 
-</html>
+@section('content')
+<p>ここが本文のコンテンツです</p>
+<p>Controller Value<br>'message'= {{$message}}</p>
+<p>View Composer value<br>'view_message' = {{$view_message}}</p>
+@endsection
+
+@section('footer')
+copyright 2020 tuyano.
+@endsection
