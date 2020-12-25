@@ -16,9 +16,12 @@ class HelloMiddleware
     public function handle($request, Closure $next)
     {
 
+        //コントローラーのアクション後のレスポンスを取得して格納
         $response = $next($request);
+        //レスポンスに設定されているコンテンツを取得
         $content = $response->content();
 
+        //テキストの置換
         $pattern = '/<middleware>(.*)<\/middleware>/i';
         $replace = '<a href="http://$1">$1</a>';
         $content = preg_replace($pattern, $replace, $content);
