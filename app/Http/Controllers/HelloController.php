@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
+use App\Http\Requests\HelloRequest;
+
+use Validator;
+
 
 // global $head, $style, $body, $end;
 
@@ -33,19 +37,25 @@ class HelloController extends Controller
 
     public function index(Request $request)
     {
-        return view('hello.index', ['msg' => 'フォームを入力:']);
+        if ($request->hasCookie('msg')) {
+            $msg = 'Cookie:' . $request->cookie('msg');
+        } else {
+            $msg = '※クッキーはありません';
+        }
+        return view('hello.index', ['msg' => $msg]);
     }
 
     public function post(Request $request)
     {
+
         $validate_rule = [
-            'name' => 'required',
-            'mail' => 'email',
-            'age' => 'numeric|between:0,150',
+            'msg' => 'required',
         ];
 
         $this->validate($request, $validate_rule);
-
-        return view('hello.index', ['msg' => '正しく入力されました！']);
+        $msg = $request->msg;
+        $response = response()->view('hello.index', ['msg' => '「' . $msg . '」クッキーを保存しました。']);
+        $response->cookie('msg', $msg, 100);
+        return $response;
     }
 }
