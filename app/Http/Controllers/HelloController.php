@@ -38,21 +38,72 @@ class HelloController extends Controller
 
     public function index(Request $request)
     {
-        $items = DB::select('select * from people');
+        $items = DB::table('people')->orderBy('age', 'asc')->get();
         return view('hello.index', ['items' => $items]);
     }
 
     public function post(Request $request)
     {
+        $items = DB::select('select * from people');
+        return view('hello.index', ['items' => $items]);
+    }
 
-        $validate_rule = [
-            'msg' => 'required',
+    public function add(Request $request)
+    {
+        return view('hello.add');
+    }
+
+    public function create(Request $request)
+    {
+        $param = [
+            'name' => $request->name,
+            'mail' => $request->mail,
+            'age' => $request->age,
         ];
 
-        $this->validate($request, $validate_rule);
-        $msg = $request->msg;
-        $response = response()->view('hello.index', ['msg' => '「' . $msg . '」クッキーを保存しました。']);
-        $response->cookie('msg', $msg, 100);
-        return $response;
+        DB::table('people')->insert($param);
+        return redirect('hello');
+    }
+
+    public function edit(Request $request)
+    {
+        $item = DB::table('people')->where('id', $request->id)->first();
+
+        return view('/hello.edit', ['form' => $item]);
+    }
+
+    public function update(Request $request)
+    {
+        $param = [
+            'id' => $request->id,
+            'name' => $request->name,
+            'mail' => $request->mail,
+            'age' => $request->age,
+        ];
+
+        DB::table('people')->where('id', $request->id)->update($param);
+
+        return redirect('/hello');
+    }
+
+    public function del(Request $request)
+    {
+
+        $item = DB::table('people')->where('id', $request->id)->first();
+        return view('hello.del', ['form' => $item]);
+    }
+
+    public function remove(Request $request)
+    {
+
+        DB::table('people')->where('id', $request->id)->delete();
+        return redirect('/hello');
+    }
+
+    public function show(Request $request)
+    {
+        $page = $request->page;
+        $items = DB::table('people')->offset($page * 3)->limit(3)->get();
+        return view('hello.show', ['items' => $items]);
     }
 }
