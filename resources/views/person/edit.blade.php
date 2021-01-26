@@ -1,10 +1,10 @@
 @extends('layouts.helloapp')
 
-@section('title','Person.Add')
+@section('title','Person.Edit')
 
 @section('menubar')
 @parent
-新規作成ページ
+編集ページ
 @endsection
 
 @section('content')
@@ -17,20 +17,22 @@
   </ul>
 </div>
 @endif
-<form action="add" method="post">
+<form action="edit" method="post">
   <table>
     @csrf
+    <input type="hidden" name="id" value="{{$form->id}}">
     <tr>
       <th>name:</th>
-      <td><input type="text" name="name" value="{{old('name')}}"></td>
+      <td><input type="text" name="name" value="{{$form->name}}"></td>
     </tr>
+
     <tr>
       <th>mail:</th>
-      <td><input type="text" name="mail" value="{{old('mail')}}"></td>
+      <td><input type="text" name="mail" value="{{$form->mail}}"></td>
     </tr>
     <tr>
       <th>age:</th>
-      <td><input type="number" name="age" value="{{old('age')}}"></td>
+      <td><input type="number" name="age" value="{{$form->age}}"></td>
     </tr>
     <tr>
       <th></th>

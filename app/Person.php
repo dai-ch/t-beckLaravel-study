@@ -20,6 +20,7 @@ class Person extends Model
     public function getData()
     {
         return $this->id . ':' . $this->name . '(' . $this->age . ')';
+
     }
 
     //制限を指定するときはscopeをつける
@@ -49,5 +50,8 @@ class Person extends Model
         static::addGlobalScope(new ScopePerson);
     }
 
-
+    public function boards()
+    {
+        return $this->hasMany('App\Board');
+    }
 }
